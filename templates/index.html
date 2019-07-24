@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration Form</title>
+  <style>
+    div {
+      display: inline-block;
+      vertical-align: text-top;
+    }
+    .flashes {color: red;}
+  </style>
+</head>
+<body>
+  <h1>Login and Registration</h1>
+  <div>
+    <h2>Dojo Registration</h2>
+	 <form action='/register' method='post'>
+
+    {% with messages = get_flashed_messages(category_filter=['firstname']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <label for="first_name">First Name:</label><br>
+    <input type="text" name="first_name" value="{{first_name}}">
+    <br>
+
+    {% with messages = get_flashed_messages(category_filter=['lastname']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <label for="last_name">Last Name:</label><br>
+    <input type="text" name="last_name" value="{{last_name}}">
+    <br>
+
+    {% with messages = get_flashed_messages(category_filter=['email']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <label for="email">Email:</label><br>
+    <input type="text" name="email" value="{{email}}">
+    <br>
+
+    {% with messages = get_flashed_messages(category_filter=['password']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <label for="password">Password:</label><br>
+    <input type="password" name="password">
+    <br>
+
+    {% with messages = get_flashed_messages(category_filter=['confirmpassword']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <label for="confirm_password">Confirm Password:</label><br>
+    <input type="password" name="confirm_password">
+    <br>
+
+    <input type='submit' value='Register!'>
+    </form>
+  </div>
+
+  <div>
+    <h2>Dojo Login</h2>
+      <form action='/login' method='post'>
+
+    {% with messages = get_flashed_messages(category_filter=['loginemail']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+        <label for="email">Email:</label><br>
+        <input type="text" name="email" value="{{email}}">
+        <br>
+
+    {% with messages = get_flashed_messages(category_filter=['loginpassword']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+        <label for="password">Password:</label><br>
+        <input type="password" name="password">
+        <br>
+        <input type='submit' value='Login!'>
+      </form>
+  </div>
+
+</body>
+</html>

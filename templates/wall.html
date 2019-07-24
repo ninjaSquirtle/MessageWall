@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome Young Ninja</title>
+</head>
+  <style>
+    .flashes {color: green;}
+    .red {color: red;}
+  </style>
+<body>
+  <div class="top_nav">
+    <h2>Coding Dojo Wall</h2>
+    <h3>Welcome {{session['first_name']}}</h3>
+    <form  action='/reset'>
+      <button type="submit">Log Out</button>
+    </form>
+  </div>
+	  {% with messages = get_flashed_messages(category_filter=['success']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="flashes">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% with messages = get_flashed_messages(category_filter=['post']) %}
+      {% if messages %}
+        {% for message in messages %}
+          <p class="red">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="post">
+      <form action='/message' method='post'>
+        <label for="message">Post a message</label><br>
+        <textarea rows="4" cols="50" id="message" name="message" placeholder="Write about your day."></textarea>
+        <input type='submit' value='Post a message'>
+      </form>
+    </div>
+    {% for x in result_message %}
+    <div class="message_block">
+      <h4>{{x['first_name']}} {{x['last_name']}} - {{x['created_at']}}</h4>
+      {% for z in result_ownmessage %}
+      {% if z['id'] == x['id'] %}
+      <form  action='/removeMessage' method='post'>
+        <input type="hidden" name="message_id" value="{{x['id']}}">
+        <button type="submit">Delete Message</button>
+      </form>
+      {% endif %}
+      {% endfor %}
+      <p>{{x['message']}}</p>
+      {% for y in result_comment %}
+      {% if y['message_id'] == x['id'] %}
+      <div class="comment_block">
+        <h4>{{y['first_name']}} {{y['last_name']}} - {{y['created_at']}}</h4>
+        {% for w in result_owncomment %}
+        {% if w['id'] == y['id'] %}
+        <form  action='/removeComment' method='post'>
+          <input type="hidden" name="comment_id" value="{{w['id']}}">
+          <button type="submit">Delete Comment</button>
+        </form>
+        {% endif %}
+        {% endfor %}
+        <p>{{y['comment']}}</p>
+      </div>
+      {% endif %}
+      {% endfor %}
+      <form action='/comment' method='post'>
+        <label for="comment">Post a comment</label><br>
+        <input type="hidden" name="message_id" value="{{x['id']}}">
+        <textarea rows="4" cols="50" name="comment" placeholder="Comment here."></textarea>
+        <input type='submit' value='Post a comment'>
+      </form>
+    </div>
+    {% endfor %}
+
+</body>
+</html>
